@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification profil{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+            <h1 class="text-center mt-2">Modifier le profil</h1>
+                <label class="form-label" for="email">Email</label>
+                <input type="text" id="email" required="required" class="form-control mb-3" value="{{ app.user.email }}" disabled>
+                <label class="form-label" for="nom">Nom</label>
+                <input type="text" id="nom" required="required" class="form-control mb-3" value="{{ app.user.nom }}" disabled>
+                <label class="form-label" for="prenom">Prénom</label>
+                <input type="text" id="prenom" required="required" class="form-control mb-3" value="{{ app.user.prenom }}" disabled>
+                {{ form_start(updateForm) }}
+                    {{ form_row(updateForm.adresse, {'value': app.user.adresse}) }}
+                    {{ form_row(updateForm.codePostal, {'value': app.user.codePostal}) }}
+                    {{ form_row(updateForm.ville, {'value': app.user.ville}) }}
+                    {{ form_row(updateForm.numeroPermis, {'value': app.user.numeroPermis}) }}
+                    {{ form_row(updateForm.password, {'required': false}) }}
+                {{ form_end(updateForm) }}
+                {% if validation %}
+                    <div class="alert alert-success">{{ validation }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
