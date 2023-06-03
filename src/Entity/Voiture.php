@@ -49,6 +49,9 @@ class Voiture
     #[ORM\OneToMany(mappedBy: 'voiture', targetEntity: Commentaire::class)]
     private Collection $commentaire;
 
+    #[ORM\Column(length: 20)]
+    private ?string $marque = null;
+
     public function __construct()
     {
         $this->reservation = new ArrayCollection();
@@ -224,6 +227,18 @@ class Voiture
                 $commentaire->setVoiture(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMarque(): ?string
+    {
+        return $this->marque;
+    }
+
+    public function setMarque(string $marque): self
+    {
+        $this->marque = $marque;
 
         return $this;
     }
