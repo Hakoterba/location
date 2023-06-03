@@ -4,17 +4,43 @@
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+        .carousel-item img {
+            object-fit: cover;
+            height: 1000px;
+            width: 100%;
+        }
 </style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/hkoterba/Documents/siteFinDannee/location/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/hkoterba/Documents/siteFinDannee/location/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div class="container mt-5">
+        <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+            <!-- Indicateurs -->
+            <ol class="carousel-indicators">
+                <li data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"></li>
+                <li data-bs-target="#myCarousel" data-bs-slide-to="1"></li>
+                <li data-bs-target="#myCarousel" data-bs-slide-to="2"></li>
+            </ol>
+            
+            <!-- Images -->
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://sf2.autojournal.fr/wp-content/uploads/sportauto/2020/11/Bugatti_Chiron_2016_83002-615x410.jpg" alt="Image 1" class="d-block w-100">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://www.bugatti.com/fileadmin/_processed_/sei/p196/se-image-ecab4374a7a77557a33321616b7562bc.jpg" alt="Image 2" class="d-block w-100">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://cdn-s-www.leprogres.fr/images/ED82BE29-CBAC-40EC-B71C-285CD717A43C/NW_raw/la-voiture-noire-de-bugatti-modele-unique-photo-dr-1608828241.jpg" alt="Image 3" class="d-block w-100">
+                </div>
+            </div>
+            
+            <!-- Flèches -->
+            <a class="carousel-control-prev" href="#myCarousel" role="button" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Précédent</span>
+            </a>
+            <a class="carousel-control-next" href="#myCarousel" role="button" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Suivant</span>
+            </a>
+        </div>
+    </div>
 {% endblock %}
