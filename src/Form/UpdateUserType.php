@@ -6,51 +6,19 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class RegistrationFormType extends AbstractType
+class UpdateUserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom', TextType::class, [
-                'label' => 'Nom',
-                'required' => true,
-                'constraints' => [
-                    new NotBlank(['message' => 'Veuillez entrer votre nom.']),
-                    new Length(['max' => 20, 'maxMessage' => 'Le nom ne peut pas dépasser {{ limit }} caractères.'])
-                ],
-                'label_attr' => ['class' => 'form-label'],
-                'attr' => ['class' => 'form-control mb-3']
-            ])
-            ->add('prenom', TextType::class, [
-                'label' => 'Prénom',
-                'required' => true,
-                'constraints' => [
-                    new NotBlank(['message' => 'Veuillez entrer votre prénom.']),
-                    new Length(['max' => 30, 'maxMessage' => 'Le prénom ne peut pas dépasser {{ limit }} caractères.'])
-                ],
-                'label_attr' => ['class' => 'form-label'],
-                'attr' => ['class' => 'form-control mb-3']
-            ])
-            ->add('email', EmailType::class, [
-                'label' => 'Email',
-                'required' => true,
-                'constraints' => [
-                    new NotBlank(['message' => 'Veuillez entrer votre adresse email.']),
-                    new Length(['max' => 30, 'maxMessage' => 'L\'email ne peut pas dépasser {{ limit }} caractères.']),
-                ],
-                'label_attr' => ['class' => 'form-label'],
-                'attr' => ['class' => 'form-control mb-3']
-            ])
             ->add('adresse', TextType::class, [
                 'label' => 'Adresse',
                 'required' => true,
@@ -103,11 +71,9 @@ class RegistrationFormType extends AbstractType
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'type' => PasswordType::class,
+                'required' => false,
                 'mapped' => false,
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez entrer un mot de passe',
-                    ]),
                     new Length([
                         'min' => 8,
                         'minMessage' => 'Votre mot de passe doit contenir {{ limit }} caractères minimum',
@@ -136,7 +102,7 @@ class RegistrationFormType extends AbstractType
                     'class' => 'btn btn-primary btn-block form-control mb-3'
                 ]
             ])
-            ;
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
