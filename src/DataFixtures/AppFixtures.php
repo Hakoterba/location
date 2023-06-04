@@ -24,23 +24,21 @@ class AppFixtures extends Fixture
             
             $digits = rand(100, 999);
             
-            return strval($departementNbr . ' ' . $lettre1 . $lettre2 . ' ' . $digits);
+            return $departementNbr . '-' . $lettre1 . $lettre2 . '-' . $digits;
         }
 
         for ($i=0; $i < count($marque); $i++) { 
-            for ($j=0; $j < count($modele); $j++) { 
-                $voiture = new Voiture();
-                $voiture->setModele($modele[$j])
-                        ->setMarque($marque[$i])
-                        ->setAnnee(rand(2000,2023))
-                        ->setKms(rand(50000,250000))
-                        ->setPrixJournalier(rand(0, 250))
-                        ->setDisponibilite(rand(0,1))
-                        ->setCarburant($carburant[rand(0, 1)])
-                        ->setDescription($description)
-                        ->setImmatriculation(genererPlaqueImm());
-                $manager->persist($voiture);
-            }
+            $voiture = new Voiture();
+            $voiture->setModele($modele[rand(0,3)])
+                    ->setMarque($marque[$i])
+                    ->setAnnee(rand(2000,2023))
+                    ->setKms(rand(50000,250000))
+                    ->setPrixJournalier(rand(0, 250))
+                    ->setDisponibilite(rand(0,1))
+                    ->setCarburant($carburant[rand(0, 1)])
+                    ->setDescription($description)
+                    ->setImmatriculation(genererPlaqueImm());
+            $manager->persist($voiture);
         }
 
         $manager->flush();
