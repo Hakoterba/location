@@ -23,7 +23,6 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            dump($data);
 
             if ($data->getPassword()) {
                 $currentPassword = trim($data->getPassword());
@@ -46,7 +45,8 @@ class UserController extends AbstractController
         }
         
         return $this->render('user/update.html.twig', [
-            'updateForm' => $form->createView()
+            'updateForm' => $form->createView(),
+            'validation' => false
         ]);
     }
 }
