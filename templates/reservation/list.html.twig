@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes réservations{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Voiture</th>
+                    <th>Date de début</th>
+                    <th>Date de fin</th>
+                    <th>Prix</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reservation in reservations %}
+                    <tr>
+                        <td><a href="{{ path('voiture_show', {'id': reservation.voiture.id}) }}">{{ reservation.voiture.marque }} : {{ reservation.voiture.modele }}</a></td>
+                        <td>{{ reservation.dateDebut|date('d-m-Y H:i') }}</td>
+                        <td>{{ reservation.dateFin|date('d-m-Y H:i') }}</td>
+                        <td>{{ reservation.prix }}€</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

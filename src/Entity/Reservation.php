@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\ReservationRepository;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Uid\Uuid;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ReservationRepository;
+use Ramsey\Uuid\Uuid as UuidUuid;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 class Reservation
@@ -14,8 +16,8 @@ class Reservation
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 20)]
-    private ?string $numeroReservation = null;
+    #[ORM\Column(type: 'uuid', unique: true)]
+    private ?Uuid $numeroReservation = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateDebut = null;
@@ -23,25 +25,26 @@ class Reservation
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateFin = null;
 
-    private ?int $prix = null;
-
     #[ORM\ManyToOne(inversedBy: 'reservation')]
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'reservation')]
     private ?Voiture $voiture = null;
 
+    #[ORM\Column]
+    private ?int $prix = null;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNumeroReservation(): ?string
+    public function getNumeroReservation(): ?Uuid
     {
         return $this->numeroReservation;
     }
 
-    public function setNumeroReservation(string $numeroReservation): self
+    public function setNumeroReservation(Uuid $numeroReservation): self
     {
         $this->numeroReservation = $numeroReservation;
 
@@ -72,18 +75,6 @@ class Reservation
         return $this;
     }
 
-    public function getPrix(): ?int
-    {
-        return $this->prix;
-    }
-
-    public function setPrix(int $prix): self
-    {
-        $this->prix = $prix;
-
-        return $this;
-    }
-
     public function getUser(): ?User
     {
         return $this->user;
@@ -104,6 +95,18 @@ class Reservation
     public function setVoiture(?Voiture $voiture): self
     {
         $this->voiture = $voiture;
+
+        return $this;
+    }
+
+    public function getPrix(): ?int
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(int $prix): self
+    {
+        $this->prix = $prix;
 
         return $this;
     }

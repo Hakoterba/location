@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réservation numéro : {{ reservation.numeroReservation }}{% endblock %}
+
+{% block body %}
+    <div class="container my-5">
+        <div class="row">
+        <h1>Réservation numéro : <strong>{{ reservation.numeroReservation }}</strong> <br>par <strong>{{ reservation.user.prenom }} {{ reservation.user.nom }}</strong></h1>
+            <div class="col-md-6">
+                <img src="{{ asset('images/' ~ reservation.voiture.image ~ '') }}" alt="Voiture" class="img-fluid">
+            </div>
+            <div class="col-md-6 mt-4 mt-md-0 d-flex flex-column justify-content-center">
+                <h2>{{ reservation.voiture.modele }}</h2>
+                <p>{{ reservation.voiture.marque }}</p>
+                <ul>
+                    <li><strong>Kilométrage:</strong> {{ reservation.voiture.kms }} km</li>
+                    <li><strong>Année:</strong> {{ reservation.voiture.annee }}</li>
+                    <li><strong>Disponibilité:</strong> {{ reservation.voiture.disponibilite ? 'Disponible' : 'Indisponible' }}</li>
+                    <li><strong>Carburant:</strong> {{ reservation.voiture.carburant }}</li>
+                    <li><strong>Prix journalier:</strong> {{ reservation.voiture.prixJournalier }}€</li>
+                </ul>
+                    <li><strong>Début :</strong> {{ reservation.dateDebut | date('d/m/Y H:i:s') }}</li>
+                    <li><strong>Fin:</strong> {{ reservation.dateFin | date('d/m/Y H:i:s') }}</li>
+                    <li><strong>Prix à payer:</strong> {{ reservation.prix }}€</li>
+            </div>
+        </div>
+    </div>
+{% endblock %}
