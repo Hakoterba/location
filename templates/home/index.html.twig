@@ -10,7 +10,7 @@
             width: 100%;
         }
 </style>
-    <div class="container mt-5">
+    <div class="container-fluid p-5">
         <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
             <!-- Indicateurs -->
             <ol class="carousel-indicators">
@@ -21,15 +21,18 @@
             
             <!-- Images -->
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="https://sf2.autojournal.fr/wp-content/uploads/sportauto/2020/11/Bugatti_Chiron_2016_83002-615x410.jpg" alt="Image 1" class="d-block w-100">
+            {% for key, voiture in listeVoiture %}
+                {% if key == 0 %}
+                    {% set active = " active" %}
+                {% else %}
+                    {% set active = "" %}
+                {% endif %}
+                <div class="carousel-item{{active}}">
+                    <a href="#">
+                        <img src="{{ asset('images/' ~ voiture.image ~ '') }}" alt="Image {{voiture.modele}}" class="d-block w-100">
+                    </a>
                 </div>
-                <div class="carousel-item">
-                    <img src="https://www.bugatti.com/fileadmin/_processed_/sei/p196/se-image-ecab4374a7a77557a33321616b7562bc.jpg" alt="Image 2" class="d-block w-100">
-                </div>
-                <div class="carousel-item">
-                    <img src="https://cdn-s-www.leprogres.fr/images/ED82BE29-CBAC-40EC-B71C-285CD717A43C/NW_raw/la-voiture-noire-de-bugatti-modele-unique-photo-dr-1608828241.jpg" alt="Image 3" class="d-block w-100">
-                </div>
+            {% endfor %}
             </div>
             
             <!-- Flèches -->

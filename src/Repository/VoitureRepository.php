@@ -39,6 +39,15 @@ class VoitureRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByLast()
+    {
+        return $this->createQueryBuilder('v')
+        ->orderBy('v.id', 'DESC')
+        ->setMaxResults(3)
+        ->getQuery()
+        ->getResult();
+    }
+
 //    /**
 //     * @return Voiture[] Returns an array of Voiture objects
 //     */

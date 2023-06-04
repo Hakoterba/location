@@ -52,6 +52,9 @@ class Voiture
     #[ORM\Column(length: 20)]
     private ?string $marque = null;
 
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $image = null;
+
     public function __construct()
     {
         $this->reservation = new ArrayCollection();
@@ -239,6 +242,18 @@ class Voiture
     public function setMarque(string $marque): self
     {
         $this->marque = $marque;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }
