@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ voiture.marque }} : {{ voiture.modele }}{% endblock %}
+
+{% block body %}
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{{ asset('images/' ~ voiture.image ~ '') }}" alt="Voiture" class="img-fluid">
+            </div>
+            <div class="col-md-6 mt-4 mt-md-0 d-flex flex-column justify-content-center">
+                <h2>{{ voiture.modele }}</h2>
+                <p>{{ voiture.marque }}</p>
+                <p>{{ voiture.description }}</p>
+                <ul>
+                    <li><strong>Kilométrage:</strong> {{ voiture.kms }} km</li>
+                    <li><strong>Année:</strong> {{ voiture.annee }}</li>
+                    <li><strong>Disponibilité:</strong> {{ voiture.disponibilite ? 'Disponible' : 'Indisponible' }}</li>
+                    <li><strong>Carburant:</strong> {{ voiture.carburant }}</li>
+                    <li><strong>Prix journalier:</strong> {{ voiture.prixJournalier }} €</li>
+                </ul>
+                <div class="text-center mt-3">
+                    <a href="{{ voiture.disponibilite ? '#' : path('app_reservation', { 'id': voiture.id }) }}" class="btn btn-primary {% if not voiture.disponibilite %}disabled{% endif %}">Réserver</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

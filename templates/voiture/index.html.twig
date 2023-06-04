@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des voitures{% endblock %}
+
+{% block body %}
+<style>
+    .image-container {
+        width: 100%;
+    }
+
+    .image-container img {
+        object-fit: cover;
+        width: 100%;
+        height: 200px;
+    }
+
+</style>
+<div class="container">
+    <div class="row mt-5">
+    {% for voiture in liste %}
+        <div class="col-md-4">
+            <a href="{{ path('voiture_show', {'id': voiture.id}) }}">
+                <div class="card mb-4">
+                    <div class="image-container">
+                        <img src="{{ asset('images/' ~ voiture.image ~ '') }}" class="card-img-top" alt="Image de la carte">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Marque : {{ voiture.marque|capitalize }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Modèle : {{ voiture.modele|capitalize }}</h6>
+                        <p class="card-text">Prix journalier : {{ voiture.prixJournalier }}€</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
