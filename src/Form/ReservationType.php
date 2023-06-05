@@ -9,12 +9,16 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ReservationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $timezone = new \DateTimeZone('Europe/Paris');
+        $datetime = new \DateTime('', $timezone);
+
         $builder
             ->add('dateDebut', DateTimeType::class, [
                 'label' => 'Date et heure de début de location',
@@ -23,6 +27,13 @@ class ReservationType extends AbstractType
                 'attr' => [
                     'class' => 'form-control mt-3',
                 ],
+                'data' => $datetime,
+                'constraints' => [
+                    new GreaterThanOrEqual([
+                        'value' => 'today',
+                        'message' => 'La date doit être égale ou postérieure à la date actuelle.',
+                    ]),
+                ],
             ])
             ->add('dateFin', DateTimeType::class, [
                 'label' => 'Date et heure de fin de location',
@@ -30,6 +41,13 @@ class ReservationType extends AbstractType
                 'html5' => true,
                 'attr' => [
                     'class' => 'form-control mt-3',
+                ],
+                'data' => $datetime,
+                'constraints' => [
+                    new GreaterThanOrEqual([
+                        'value' => 'today',
+                        'message' => 'La date doit être égale ou postérieure à la date actuelle.',
+                    ]),
                 ],
             ])
             ->add('valider', SubmitType::class, [
