@@ -5,6 +5,7 @@
 {% block body %}
 <div class="container mt-4">
     <div class="table-responsive">
+        <h2>Réservations en cours</h2>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -15,9 +16,69 @@
                 </tr>
             </thead>
             <tbody>
-                {% for reservation in reservations %}
+                {% for reservation in reservationEnCours %}
                     <tr>
-                        <td><a href="{{ path('voiture_show', {'id': reservation.voiture.id}) }}">{{ reservation.voiture.marque }} : {{ reservation.voiture.modele }}</a></td>
+                        <td>{{ reservation.voiture.marque }} : {{ reservation.voiture.modele }}</td>
+                        <td>{{ reservation.dateDebut|date('d-m-Y H:i') }}</td>
+                        <td>{{ reservation.dateFin|date('d-m-Y H:i') }}</td>
+                        <td>{{ reservation.prix }}€</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="table-responsive">
+        <h2>Réservations à venir</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Voiture</th>
+                    <th>Date de début</th>
+                    <th>Date de fin</th>
+                    <th>Prix</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reservation in reservationFutur %}
+                    <tr>
+                        <td>{{ reservation.voiture.marque }} : {{ reservation.voiture.modele }}</td>
+                        <td>{{ reservation.dateDebut|date('d-m-Y H:i') }}</td>
+                        <td>{{ reservation.dateFin|date('d-m-Y H:i') }}</td>
+                        <td>{{ reservation.prix }}€</td>
+                        <td>
+                            <a href="{{ path('reservation_delete', {'id': app.user.id, 'idReservation': reservation.id}) }}"
+                                class="btn btn-danger"
+                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réservation ?');">
+                                Supprimer
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <h2>Réservations passées</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Voiture</th>
+                    <th>Date de début</th>
+                    <th>Date de fin</th>
+                    <th>Prix</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reservation in reservationPasse %}
+                    <tr>
+                        <td>{{ reservation.voiture.marque }} : {{ reservation.voiture.modele }}</td>
                         <td>{{ reservation.dateDebut|date('d-m-Y H:i') }}</td>
                         <td>{{ reservation.dateFin|date('d-m-Y H:i') }}</td>
                         <td>{{ reservation.prix }}€</td>

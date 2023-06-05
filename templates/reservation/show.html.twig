@@ -5,7 +5,13 @@
 {% block body %}
     <div class="container my-5">
         <div class="row">
-        <h1>Réservation numéro : <strong>{{ reservation.numeroReservation }}</strong> <br>par <strong>{{ reservation.user.prenom }} {{ reservation.user.nom }}</strong></h1>
+        <h1>Réservation numéro : <strong>{{ reservation.numeroReservation }}</strong> <br>par <strong>{{ reservation.user.prenom }} {{ reservation.user.nom }}</strong>
+                <span class="text-success">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                        <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.327 5.373a.5.5 0 0 1 .646.76l-4 5a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7 10.293l3.646-4.88a.5.5 0 0 1 .681-.04z"/>
+                    </svg>
+                </span>
+        </h1>
             <div class="col-md-6">
                 <img src="{{ asset('images/' ~ reservation.voiture.image ~ '') }}" alt="Voiture" class="img-fluid">
             </div>

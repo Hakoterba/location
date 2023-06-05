@@ -20,7 +20,12 @@
                     <li><strong>Prix journalier:</strong> {{ voiture.prixJournalier }} €</li>
                 </ul>
                 <div class="text-center mt-3">
-                    <a href="{{ voiture.disponibilite ? path('app_reservation', { 'id': voiture.id }) : "#" }}" class="btn btn-primary {% if not voiture.disponibilite %}disabled{% endif %}">Réserver</a>
+                    {% if not app.user %}
+                        <p><a href="{{ path('app_login') }}">Connectez vous pour réserver</a></p>
+                        <button class="btn btn-primary {% if not voiture.disponibilite %}disabled{% endif %}">{{ voiture.disponibilite ? "Réservez" : "Voiture indisponible" }}</button>
+                    {% else %}
+                        <a href="{{ voiture.disponibilite ? path('app_reservation', { 'id': voiture.id }) : "#" }}" class="btn btn-primary {% if not voiture.disponibilite %}disabled{% endif %}">{{ voiture.disponibilite ? "Réservez" : "Voiture indisponible" }}</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

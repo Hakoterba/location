@@ -19,7 +19,7 @@
     <div class="row mt-5">
     {% for voiture in liste %}
         <div class="col-md-4">
-            <a href="{{ path('voiture_show', {'id': voiture.id}) }}">
+            <a href="{{ path('voiture_show', {'id': voiture.id}) }}" class="text-decoration-none">
                 <div class="card mb-4">
                     <div class="image-container">
                         <img src="{{ asset('images/' ~ voiture.image ~ '') }}" class="card-img-top" alt="Image de la carte">
