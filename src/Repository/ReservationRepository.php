@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\Reservation;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Reservation>
@@ -37,6 +38,48 @@ class ReservationRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findByDateFutur(User $user)
+    {
+        $dateActuelle = new \DateTime();
+
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.dateDebut > :dateActuelle')
+            ->andWhere('v.dateFin > :dateActuelle')
+            ->andWhere('v.user = :user')
+            ->setParameter('dateActuelle', $dateActuelle)
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByDatePasse(User $user)
+    {
+        $dateActuelle = new \DateTime();
+
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.dateFin < :dateActuelle')
+            ->andWhere('v.user = :user')
+            ->setParameter('dateActuelle', $dateActuelle)
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByDateEnCours(User $user)
+    {
+        $dateActuelle = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+        $dateActuelle->setTimezone(new \DateTimeZone('UTC')); // Convertir la date actuelle en UTC si nécessaire
+    
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.dateDebut < :dateActuelle')
+            ->andWhere('v.dateFin > :dateActuelle')
+            ->andWhere('v.user = :user')
+            ->setParameter('dateActuelle', $dateActuelle)
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
     }
 
 //    /**

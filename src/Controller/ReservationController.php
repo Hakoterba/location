@@ -16,7 +16,7 @@ use Symfony\Component\Uid\Uuid as SymfonyUuid;
 
 class ReservationController extends AbstractController
 {
-    #[Route('voitures/{id}/reservation', name: 'app_reservation')]
+    #[Route('/voitures/{id}/reservation', name: 'app_reservation')]
     public function index(EntityManagerInterface $em, Request $request, int $id): Response
     {
         $voiture = $em->find(Voiture::class, $id);
@@ -42,6 +42,10 @@ class ReservationController extends AbstractController
                 ->setDateDebut($form->get('dateDebut')->getData())
                 ->setDateFin($form->get('dateFin')->getData())
                 ->setPrix($prixTotal);
+            
+            if ($voiture->getDisponibilite()) {
+                
+            }
 
             $em->persist($reservation);
             $em->flush();
@@ -62,10 +66,30 @@ class ReservationController extends AbstractController
     public function show(EntityManagerInterface $em, int $id)
     {
         $user = $this->getUser();
-        $reservation = $em->getRepository(Reservation::class)->findBy(['user' => $user]);
+        $reservationFutur = $em->getRepository(Reservation::class)->findByDateFutur($user);
+        $reservationPasse = $em->getRepository(Reservation::class)->findByDatePasse($user);
+        $reservationEnCours = $em->getRepository(Reservation::class)->findByDateEnCours($user);
 
         return $this->render('reservation/list.html.twig', [
-            'reservations' => $reservation
+            'reservationFutur' => $reservationFutur,
+            'reservationPasse' => $reservationPasse,
+            'reservationEnCours' => $reservationEnCours
         ]);
+    }
+
+    #[Route('/{id}/reservation/delete/{idReservation}', name: 'reservation_delete')]
+    public function delete(EntityManagerInterface $em, int $id, int $idReservation): Response
+    {
+        $existingReservation = $em->getRepository(Reservation::class)->find($idReservation);
+        
+        if (!$existingReservation) {
+            throw $this->createNotFoundException('La réservation spécifiée n\'existe pas.');
+        }
+        
+        $em->remove($existingReservation);
+        $em->flush();
+
+        $this->addFlash('success', 'La réservation a été supprimée avec succès.');
+        return $this->redirectToRoute('user_reservation', ['id' => $id]);
     }
 }
