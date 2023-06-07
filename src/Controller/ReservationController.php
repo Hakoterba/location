@@ -7,6 +7,7 @@ use App\Entity\Voiture;
 use App\Entity\Reservation;
 use App\Form\ReservationType;
 use Ramsey\Uuid\Uuid;
+use App\Util\ShortUuid;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +17,9 @@ use Symfony\Component\Uid\Uuid as SymfonyUuid;
 
 class ReservationController extends AbstractController
 {
+  
+
+
     #[Route('/voitures/{id}/reservation', name: 'app_reservation')]
     public function index(EntityManagerInterface $em, Request $request, int $id): Response
     {
@@ -42,11 +46,7 @@ class ReservationController extends AbstractController
                 ->setDateDebut($form->get('dateDebut')->getData())
                 ->setDateFin($form->get('dateFin')->getData())
                 ->setPrix($prixTotal);
-            
-            if ($voiture->getDisponibilite()) {
-                
-            }
-
+    
             $em->persist($reservation);
             $em->flush();
     

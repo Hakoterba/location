@@ -26,7 +26,7 @@ class AppFixtures extends Fixture
             
             return $departementNbr . '-' . $lettre1 . $lettre2 . '-' . $digits;
         }
-
+        // git add
         for ($i=0; $i < count($marque); $i++) { 
             $voiture = new Voiture();
             $voiture->setModele($modele[rand(0,3)])
@@ -40,7 +40,7 @@ class AppFixtures extends Fixture
                     ->setImmatriculation(genererPlaqueImm());
             $manager->persist($voiture);
         }
-
+        //git push
         $manager->flush();
     }
 }
