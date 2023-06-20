@@ -3,12 +3,14 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Voiture;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use App\Entity\Categorie;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class VoitureCrudController extends AbstractCrudController
@@ -18,7 +20,14 @@ class VoitureCrudController extends AbstractCrudController
         return Voiture::class;
     }
 
-    
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('Voiture')
+            ->setEntityLabelInPlural('Voitures')
+            ->setPageTitle('edit', 'Édition de %entity_label_singular%');
+    }
+
     public function configureFields(string $pageName): iterable
     {
             yield TextField::new('modele');
@@ -32,7 +41,7 @@ class VoitureCrudController extends AbstractCrudController
             yield ImageField::new('image')
                 ->setBasePath('public/images/')
                 ->setUploadDir('public/images/')
-                ->setUploadedFileNamePattern('Car.[randomhash].[extension]');;
+                ->setUploadedFileNamePattern('Car.[randomhash].[extension]');
             yield TextEditorField::new('description');
     }
 }

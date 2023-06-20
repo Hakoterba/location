@@ -5,12 +5,13 @@ namespace App\Controller\Admin;
 use App\Entity\Voiture;
 use Symfony\Component\HttpFoundation\Response;
 use App\Controller\Admin\VoitureCrudController;
+use App\Entity\Reservation;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
-
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -20,7 +21,7 @@ class DashboardController extends AbstractDashboardController
         $routeBuilder = $this->container->get(AdminUrlGenerator::class);
         $url = $routeBuilder->setController(VoitureCrudController::class)->generateUrl();
 
-        return $this->redirect($url);
+        return new RedirectResponse($url);
 
         // Option 1. You can make your dashboard redirect to some common page of your backend
         //
@@ -49,5 +50,7 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Voiture', 'fas fa-map-marker-alt', Voiture::class);
+        yield MenuItem::linkToCrud('Reservation', 'fas fa-map-marker-alt', Reservation::class);
+        yield MenuItem::linkToRoute('Retour vers la page d\'accueil', 'fa fa-home', 'home');
     }
 }
