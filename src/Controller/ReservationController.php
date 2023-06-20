@@ -26,6 +26,9 @@ class ReservationController extends AbstractController
         $uuid = Uuid::uuid4();
         $uuid = SymfonyUuid::fromString($uuid->toString());
         $user = $this->getUser();
+        $timestamp = time();
+        $datetime = \DateTime::createFromFormat('U', $timestamp);
+
 
         
         if ($form->isSubmitted() && $form->isValid()) {
@@ -36,16 +39,21 @@ class ReservationController extends AbstractController
             $nombreJours = $interval->days;
             $prixTotal = $prixJournalier * $nombreJours;
 
+            // voir si voiture disponible à cette période
+            //$reservations = $voiture->getReservations();
+            //foreach ($reservations as $existingReservation) {
+            //    if (($dateDebut >= $existingReservation->getStartDate() && $dateDebut <= $existingReservation->getEndDate())
+            //        || ($dateFin >= $existingReservation->getStartDate() && $dateFin <= $existingReservation->getEndDate())) {
+            //        
+            //    }
+            //}
+
             $reservation->setUser($user)
                 ->setVoiture($voiture)
                 ->setNumeroReservation($uuid)
-                ->setDateDebut($form->get('dateDebut')->getData())
-                ->setDateFin($form->get('dateFin')->getData())
+                ->setDateDebut($dateDebut)
+                ->setDateFin($dateFin)
                 ->setPrix($prixTotal);
-            
-            if ($voiture->getDisponibilite()) {
-                
-            }
 
             $em->persist($reservation);
             $em->flush();

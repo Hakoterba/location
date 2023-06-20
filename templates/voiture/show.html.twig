@@ -29,5 +29,43 @@
                 </div>
             </div>
         </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="text-center mt-4">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    {{ form_start(commentaireForm) }}
+                    {{ form_end(commentaireForm) }}
+                {% endif %}
+                </div>
+            </div>
+        </div>
+        {% if commentaires %}
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="text-center mt-4">
+                        <div class="container">
+                            <h1>Commentaires :</h1>
+                            <hr>
+                        </div>
+                        {% for commentaire in commentaires %}
+                            <div class="comment">
+                                <h4>{{ commentaire.user.prenom }} .{{ commentaire.user.nom|slice(0, 1)|upper }} le {{ commentaire.createdAt|date("d/m/Y") }} à {{ commentaire.createdAt|date("H:i") }}</h4>
+                                <p>
+                                    Note : 
+                                    {% for i in 1..5 %}
+                                        {% if i <= commentaire.note %}
+                                            <span class="star">&#9733;</span>
+                                        {% else %}
+                                            <span class="star">&#9734;</span>
+                                        {% endif %}
+                                    {% endfor %}
+                                </p>
+                                <p>{{ commentaire.contenu }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
